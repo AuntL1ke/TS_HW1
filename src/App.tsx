@@ -5,6 +5,8 @@ import { Route, Routes } from 'react-router-dom';
 import Home from './components/Home';
 import Layout from './components/Layout';
 import AutoList from './components/AutoList';
+import Login from './components/account/Login';
+import Registration from './components/account/Registration';
 
 function App() {
   return (
@@ -13,6 +15,8 @@ function App() {
         <Route path='/' element={<Layout/>}>
           <Route index element={<Home/>}/>
           <Route path='autos' element={<AutoList/>}/>
+          <Route path='login' element={<Login/>}/>
+          <Route path='register' element={<Registration/>}/>
         </Route>
       </Routes>
     </div>
