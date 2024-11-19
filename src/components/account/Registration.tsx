@@ -1,9 +1,13 @@
 import { useForm } from "react-hook-form";
 import { IRegisterDto } from "../../types/user";
 import { Box, Button, TextField, Typography } from "@mui/material";
+import { AuthService } from "../../services/auth.service";
+import { useNavigate } from "react-router-dom";
 
 export default function Login()
 {
+    const navigate = useNavigate();
+    
     const {
         register,
         handleSubmit,
@@ -11,7 +15,15 @@ export default function Login()
     } = useForm<IRegisterDto>();
 
     const onSubmit = async (user: IRegisterDto) => {
-        alert(user.email);
+        try {
+            await AuthService.register(user);
+
+            navigate("/login");
+        } catch (err : any) {
+            const error = err.response?.data.message;
+            
+            alert(error);
+        }
     }
 
     return (

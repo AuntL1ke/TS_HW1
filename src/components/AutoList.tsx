@@ -2,21 +2,22 @@ import { useEffect, useState } from "react";
 import { ICar } from "../types/car";
 import Auto from "./Auto";
 import { Container, Stack, Typography } from "@mui/material";
+import { CarService } from "../services/cars.service";
 
 export default function AutoList()
 {
     const [cars, setCars] = useState<ICar[]|undefined>();
-    const api : string = "https://testautoshopwebapi-fgf2cdcphmgtgtaz.polandcentral-01.azurewebsites.net/api/cars";
     
     useEffect(() => {
-        fetch(api)
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
+        const dataFetch = async () => {
+            const data = await CarService.cars();
 
-                setCars(data["$values"]);
-            })
-            .catch(error => console.error(error));
+            setCars(data);
+        }
+
+        dataFetch().catch(err => {
+            console.error(err);
+        })
     }, []);
 
     return (
